@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playbook - HBC Bons-en-Chablais</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CONFIGURATION DESIGN --- */
+        :root {
+            --primary: #0044cc;       /* Bleu Principal */
+            --primary-dark: #002a80;  /* Bleu Foncé */
+            --accent: #3388ff;        /* Bleu Clair pour les touches */
+            --white: #ffffff;
+            --bg-color: #f4f7f9;      /* Gris très léger bleuté */
+            --text-dark: #1a1a2e;
+            --text-light: #6e6e80;
+            --shadow: 0 10px 30px rgba(0, 68, 204, 0.1);
+            --radius: 16px;
+        }
+
+        /* --- RESET --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- HERO HEADER (En-tête dynamique) --- */
+        header { 
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: var(--white); 
+            padding: 4rem 1.5rem; 
+            text-align: center; 
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); /* Coupe en biais moderne */
+            margin-bottom: 2rem;
+        }
+        
+        h1 { 
+            font-family: 'Montserrat', sans-serif; 
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle { 
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem; 
+            opacity: 0.9; 
+            font-weight: 400; 
+            letter-spacing: 1px;
+        }
+
+        /* --- NAVIGATION / FILTRES --- */
+        .filters { 
+            display: flex; 
+            justify-content: center; 
+            gap: 12px; 
+            padding: 0 20px; 
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--white); 
+            border: none;
+            color: var(--text-dark);
+            padding: 10px 24px; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .filter-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        
+        .filter-btn.active { 
+            background: var(--primary); 
+            color: var(--white); 
+            box-shadow: 0 8px 20px rgba(0, 68, 204, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* --- GRILLE --- */
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+        
+        .tactic-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); 
+            gap: 30px; 
+            padding-bottom: 60px;
+        }
+
+        /* --- CARTE DESIGN --- */
+        .card { 
+            background: var(--white); 
+            border-radius: var(--radius); 
+            overflow: hidden; 
+            box-shadow: var(--shadow); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 40px rgba(0, 68, 204, 0.15); 
+        }
+        
+        /* Zone Vidéo */
+        .video-wrapper { 
+            width: 100%; 
+            background: #000; 
+            aspect-ratio: 16/9;
+            position: relative;
+        }
+        
+        video { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block;
+        }
+
+        .card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        
+        .badge { 
+            align-self: flex-start;
+            font-size: 0.7rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            background: rgba(0, 68, 204, 0.1); 
+            color: var(--primary); 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            font-weight: 800; 
+            margin-bottom: 12px; 
+        }
+        
+        h3 { 
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark); 
+            margin-bottom: 10px; 
+            font-size: 1.3rem; 
+            font-weight: 700;
+        }
+        
+        p { 
+            font-size: 0.95rem; 
+            color: var(--text-light); 
+            line-height: 1.6; 
+        }
+
+        /* --- FOOTER --- */
+        footer { 
+            text-align: center; 
+            padding: 40px; 
+            color: var(--text-light); 
+            font-size: 0.85rem; 
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            header { clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); padding: 3rem 1rem; }
+            .tactic-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>HBC Bons-en-Chablais</h1>
+        <div class="subtitle">Playbook Officiel &bull; Saison 2024-2025</div>
+    </header>
+
+    <div class="filters">
+        <button class="filter-btn active" onclick="filterTactics('all')">Tout</button>
+        <button class="filter-btn" onclick="filterTactics('attaque')">Attaque</button>
+        <button class="filter-btn" onclick="filterTactics('defense')">Défense</button>
+        <button class="filter-btn" onclick="filterTactics('gb')">Gardiens</button>
+    </div>
+
+    <div class="container">
+        <div class="tactic-grid" id="grid">
+            </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 HBC Bons-en-Chablais<br>Outil tactique interne - Confidentiel</p>
+    </footer>
+
+    <script>
+        // --- 1. CONFIGURATION DES VIDÉOS ---
+        // Ajoutez vos vidéos ci-dessous
+        const tactics = [
+            {
+                title: "Croisé Arrière / DC",
+                category: "attaque",
+                desc: "Fixation externe du DC qui libère l'arrière lancé plein axe. Timing crucial sur le bloc.",
+                url: "videos/croise.mp4" 
+            },
+            {
+                title: "Défense 0-6 Bloc central",
+                category: "defense",
+                desc: "Fermeture des espaces intérieurs. Les n°3 sortent uniquement sur le bras armé.",
+                url: "videos/defense.mp4"
+            },
+            {
+                title: "Relance Rapide",
+                category: "gb",
+                desc: "Prise d'information immédiate avant même la récupération de balle.",
+                url: "videos/relance.mp4"
+            },
+            // Pour tester le design (vidéo exemple)
+            {
+                title: "Exemple Rentrée d'Ailier",
+                category: "attaque",
+                desc: "L'ailier circule dans le dos de la défense pour désorganiser le bloc central.",
+                url: "https://www.w3schools.com/html/mov_bbb.mp4"
+            }
+        ];
+
+        // --- 2. LOGIQUE D'AFFICHAGE ---
+        const grid = document.getElementById('grid');
+        const btns = document.querySelectorAll('.filter-btn');
+
+        function loadTactics(filter = 'all') {
+            // Petit effet de fondu à chaque changement
+            grid.style.opacity = '0';
+            
+            setTimeout(() => {
+                grid.innerHTML = '';
+                const filtered = filter === 'all' ? tactics : tactics.filter(t => t.category === filter);
+
+                if(filtered.length === 0) {
+                    grid.innerHTML = '<p style="text-align:center; width:100%; color:#888;">Aucune tactique trouvée.</p>';
+                }
+
+                filtered.forEach(t => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div class="video-wrapper">
+                            <video controls playsinline preload="metadata">
+                                <source src="${t.url}" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="card-content">
+                            <span class="badge">${t.category}</span>
+                            <h3>${t.title}</h3>
+                            <p>${t.desc}</p>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+                
+                grid.style.opacity = '1';
+                grid.style.transition = 'opacity 0.3s ease';
+            }, 200);
+        }
+
+        function filterTactics(cat) {
+            btns.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            loadTactics(cat);
+        }
+
+        loadTactics();
+    </script>
+</body>
+</html>
